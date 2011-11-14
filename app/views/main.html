@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        #{get 'moreScripts' /}
+    </head>
+    <body>
+		<div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1"></div>
+        #{doLayout /}
+    </body>
+	<div id="fb-root"></div>
+	<script>
+// Load the SDK Asynchronously
+(function(d){
+ var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+ js = d.createElement('script'); js.id = id; js.async = true;
+ js.src = "//connect.facebook.net/en_US/all.js";
+ d.getElementsByTagName('head')[0].appendChild(js);
+}(document));
+
+window.fbAsyncInit = function() {
+	FB.init({
+	  appId      : '194743923938916', // App ID
+	  channelURL : '//localhost:9000/public/channel.html', // Channel File
+	  status     : true, // check login status
+	  cookie     : true, // enable cookies to allow the server to access the session
+	  oauth      : true, // enable OAuth 2.0
+	  xfbml      : true  // parse XFBML
+	});
+	FB.login(function(response2){
+		if(response2.authResponse){
+			alert("login");
+			FB.api('/me', function(response3) {
+				msg = "" ;
+				$.each(response3, function(i, item){
+					msg += i+":"+item+"\n" ;
+				});
+				alert(msg);
+			});
+		}else{
+			alert("not login");
+		}
+	});
+// Additional initialization code here
+};
+	</script>
+</html>
