@@ -11,7 +11,7 @@
         #{get 'moreScripts' /}
     </head>
     <body>
-		<div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1"></div>
+		<div class="fb-login-button" data-show-faces="true" data-width="200"data-max-rows="1"></div>
         #{doLayout /}
     </body>
 	<div id="fb-root"></div>
@@ -33,18 +33,13 @@ window.fbAsyncInit = function() {
 	  oauth      : true, // enable OAuth 2.0
 	  xfbml      : true  // parse XFBML
 	});
-	FB.login(function(response2){
-		if(response2.authResponse){
-			alert("login");
-			FB.api('/me', function(response3) {
-				msg = "" ;
-				$.each(response3, function(i, item){
-					msg += i+":"+item+"\n" ;
-				});
-				alert(msg);
+	FB.getLoginStatus(function(res){
+		if(res.authResponse){
+			FB.api("/me", function(resp){				
+				$.post("@{addUser()}", {"fbid": resp.id, "name" : resp.name});
 			});
 		}else{
-			alert("not login");
+			alert("logout");
 		}
 	});
 // Additional initialization code here

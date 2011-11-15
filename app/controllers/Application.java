@@ -10,11 +10,14 @@ import models.*;
 public class Application extends Controller {
 	public static int countor = 1 ;
     public static void index() {
-		countor++ ;
-		int count = countor ;
-        render(count);
+		List users = User.find("order by id desc").fetch();
+		render(users);
     }
 	public static void sayHello(String name){
 		render(name);
+	}
+	public static void addUser(String fbid, String name){
+		User u = new User(fbid, name).save();
+		renderJSON(u);
 	}
 }

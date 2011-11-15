@@ -1,5 +1,8 @@
-
-case 1
+case 登入
+	1. 取得使用者資料 (FB.api("/me"))
+	2. 更新資料庫 (play data update)?
+		. 更新User, Friendship 
+case 1 下載資料
 	1. 撈朋友資料
 	2. 存DB			user 1-* friendship
 	
